@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CustomerUploadActivity">
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Customer Document Upload"
+        android:textAlignment="center"
+        android:textSize="24dp"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="40dp"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/mobile_search_ed"
+        android:layout_width="260dp"
+        android:layout_height="45dp"
+        android:hint="Search Mobile"
+        android:layout_below="@id/title"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/editnewblack_bg"
+        android:paddingLeft="10dp"
+        />
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/searchBtn"
+        android:layout_below="@id/title"
+        android:layout_toRightOf="@id/mobile_search_ed"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/ic_baseline_search_24"
+        />
+
+    <TextView
+        android:id="@+id/customer_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="EMPTY"
+        android:textAllCaps="true"
+        android:layout_below="@id/mobile_search_ed"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="25dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColor="#0EA314"
+        android:visibility="invisible"
+        />
+
+    <RelativeLayout
+        android:id="@+id/relLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/customer_details"
+        android:layout_marginTop="20dp"
+        android:visibility="invisible">
+
+        <Spinner
+            android:id="@+id/documenttype_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/editnewblack_bg"
+            />
+        <Button
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn1"
+            android:layout_below="@id/documenttype_spinner"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="40dp"
+            android:text="Browse"
+            android:background="@drawable/buttondark_bg"
+            android:textColor="@android:color/white"
+            />
+        <Button
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn2"
+            android:layout_below="@id/documenttype_spinner"
+            android:layout_toRightOf="@id/btn1"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="Camera"
+            android:background="@drawable/buttondark_bg"
+            android:textColor="@android:color/white"
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/imageView1"
+            android:layout_below="@id/btn1"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+
+        <Button
+            android:id="@+id/uploadBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView1"
+            android:layout_marginTop="20dp"
+            android:background="#009688"
+            android:text="Upload Documents"
+            android:textColor="@android:color/white"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>
