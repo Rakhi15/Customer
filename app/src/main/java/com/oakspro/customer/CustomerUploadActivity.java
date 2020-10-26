@@ -1,13 +1,24 @@
 package com.oakspro.customer;
 
 import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,11 +34,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +61,8 @@ public class CustomerUploadActivity extends AppCompatActivity {
     String api_mobile="https://oakspro.com/projects/project35/deepu/TLS/mobile_search.php";
     ProgressDialog progressDialog;
     String cname, cemail;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +85,54 @@ public class CustomerUploadActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(true);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        final String[] doctypes={"Passport", "National ID", "File"};
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, doctypes);
+        documenttype.setAdapter(adapter);
+
+
+        browseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Dexter.withActivity(CustomerUploadActivity.this)
+                        .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .withListener(new PermissionListener() {
+                            @Override
+                            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+
+
+                                Intent intent=new Intent(Intent.ACTION_PICK);
+                                intent.setType("image/*");
+                                startActivityForResult(Intent.createChooser(intent, "Select Image"), 1);
+
+                            }
+
+                            @Override
+                            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                            }
+
+                            @Override
+                            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                                permissionToken.continuePermissionRequest();
+                            }
+                        }).check();
+
+
+            }
+        });
+
+        cameraBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent camera_intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(camera_intent, 2);
+            }
+        });
+
+
 
 
 
@@ -89,6 +158,29 @@ public class CustomerUploadActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (requestCode == 1 && resultCode == RESULT_OK && data !=null){
+            Uri filepath=data.getData();
+
+            try {
+                InputStream inputStream=getContentResolver().openInputStream(filepath);
+                Bitmap bitmap= BitmapFactory.decodeStream(inputStream);
+                loadedImage.setImageBitmap(bitmap);
+
+            }catch (FileNotFoundException e){
+                e.printStackTrace();
+            }
+        }
+        if (requestCode == 2){
+            Bitmap photo=(Bitmap)data.getExtras().get("data");
+            loadedImage.setImageBitmap(photo);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void checkMobile(final String mobilenew) {
