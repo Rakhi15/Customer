@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -45,6 +46,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -59,10 +61,10 @@ public class CustomerUploadActivity extends AppCompatActivity {
     ImageView loadedImage;
     TextView customerDetails;
     String api_mobile="https://oakspro.com/projects/project35/deepu/TLS/mobile_search.php";
-    ProgressDialog progressDialog;
-    String cname, cemail;
-
-
+    ProgressDialog progressDialog, progressUpload;
+    String cname, cemail, cuserid;
+    String encodedPicture;
+    String upload_doc_api="https://oakspro.com/projects/project35/deepu/TLS/upload_documents.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,12 @@ public class CustomerUploadActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(true);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        progressUpload=new ProgressDialog(CustomerUploadActivity.this);
+        progressUpload.setMessage("Uploading...");
+        progressUpload.setIndeterminate(true);
+        progressUpload.setCanceledOnTouchOutside(false);
+        progressUpload.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         final String[] doctypes={"Passport", "National ID", "File"};
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, doctypes);
@@ -156,6 +164,46 @@ public class CustomerUploadActivity extends AppCompatActivity {
             }
         });
 
+        //upload code
+
+        uploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            progressUpload.show();
+                StringRequest uploadRequest=new StringRequest(Request.Method.POST, upload_doc_api, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressUpload.dismiss();
+                        Toast.makeText(CustomerUploadActivity.this, "Upload: "+response.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        progressDialog.dismiss();
+                        Toast.makeText(CustomerUploadActivity.this, "Volley Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> uploadData =new HashMap<>();
+                        uploadData.put("userid", cuserid);
+                        uploadData.put("documenttype", documenttype.getSelectedItem().toString());
+                        uploadData.put("image", encodedPicture);
+                        return uploadData;
+
+                    }
+                };
+                RequestQueue requestQueue=Volley.newRequestQueue(CustomerUploadActivity.this);
+                requestQueue.add(uploadRequest);
+
+
+
+
+            }
+        });
+
 
 
     }
@@ -170,6 +218,7 @@ public class CustomerUploadActivity extends AppCompatActivity {
                 InputStream inputStream=getContentResolver().openInputStream(filepath);
                 Bitmap bitmap= BitmapFactory.decodeStream(inputStream);
                 loadedImage.setImageBitmap(bitmap);
+                imageProcess(bitmap);
 
             }catch (FileNotFoundException e){
                 e.printStackTrace();
@@ -178,9 +227,20 @@ public class CustomerUploadActivity extends AppCompatActivity {
         if (requestCode == 2){
             Bitmap photo=(Bitmap)data.getExtras().get("data");
             loadedImage.setImageBitmap(photo);
+            imageProcess(photo);
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void imageProcess(Bitmap bitmap) {
+        ByteArrayOutputStream newstream=new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, newstream);
+
+        byte[] imageBytes= newstream.toByteArray();
+
+        encodedPicture=android.util.Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
     }
 
     private void checkMobile(final String mobilenew) {
@@ -201,6 +261,7 @@ public class CustomerUploadActivity extends AppCompatActivity {
                                 for (int i=0; i<jsonArray.length(); i++){
                                     JSONObject object=jsonArray.getJSONObject(i);
 
+                                    cuserid=object.getString("userid").trim();
                                     cname=object.getString("name").trim();
                                     cemail=object.getString("email").trim();
 

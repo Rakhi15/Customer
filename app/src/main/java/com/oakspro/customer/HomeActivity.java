@@ -44,6 +44,15 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        assignsimcardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(HomeActivity.this, AssignSimcardActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 }

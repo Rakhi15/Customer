@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AssignSimcardActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Assign Simcard"
+            android:textAlignment="center"
+            android:textSize="24dp"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="40dp"
+            android:textStyle="bold"
+            />
+
+        <EditText
+            android:id="@+id/mobile_search_ed"
+            android:layout_width="260dp"
+            android:layout_height="45dp"
+            android:hint="Search Mobile"
+            android:layout_below="@id/title"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/editnewblack_bg"
+            android:paddingLeft="10dp"
+            />
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/searchBtn"
+            android:layout_below="@id/title"
+            android:layout_toRightOf="@id/mobile_search_ed"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/ic_baseline_search_24"
+            />
+
+        <TextView
+            android:id="@+id/customer_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EMPTY"
+            android:textAllCaps="true"
+            android:layout_below="@id/mobile_search_ed"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="25dp"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="#0EA314"
+            android:visibility="invisible"
+            />
+
+        <LinearLayout
+            android:id="@+id/linear22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/customer_details"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ICCID"
+                android:textSize="18dp"
+                android:layout_marginLeft="25dp"
+                android:textColor="@android:color/black"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:id="@+id/iccid_ed"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/editnewblack_bg"
+                android:hint="Enter ICCID"
+                android:paddingLeft="20dp"
+                android:maxLength="20"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IMSI"
+                android:textSize="18dp"
+                android:layout_marginLeft="25dp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="40dp"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:id="@+id/imsi_ed"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/editnewblack_bg"
+                android:hint="Enter IMSI"
+                android:paddingLeft="20dp"
+                android:maxLength="14"
+                android:inputType="number"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@android:color/holo_red_dark"
+                android:id="@+id/error_txt"
+                android:textSize="16dp"
+                />
+
+
+            <Button
+                android:id="@+id/assignBtn"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="#45BFF6"
+                android:text="Assign Simcard"
+                android:textSize="22dp"
+                android:textColor="@android:color/white"
+                />
+
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
