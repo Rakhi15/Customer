@@ -40,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(HomeActivity.this, CustomerUploadActivity.class);
+                intent.putExtra("user", user);
                 startActivity(intent);
             }
         });
@@ -49,6 +50,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent=new Intent(HomeActivity.this, AssignSimcardActivity.class);
+                intent.putExtra("user", user);
                 startActivity(intent);
             }
         });

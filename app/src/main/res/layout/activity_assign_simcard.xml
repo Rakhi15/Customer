@@ -110,6 +110,26 @@
                 android:maxLength="14"
                 android:inputType="number"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SIM Slot"
+                android:textSize="18dp"
+                android:layout_marginLeft="25dp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="40dp"
+                />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:id="@+id/simslot_ed"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/editnewblack_bg"
+                android:paddingLeft="20dp"
+                android:maxLength="14"
+                android:inputType="number"
+                />
 
 
             <TextView
