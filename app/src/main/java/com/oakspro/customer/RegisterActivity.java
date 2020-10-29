@@ -2,7 +2,12 @@ package com.oakspro.customer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -33,6 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
     private String url="https://oakspro.com/projects/project35/deepu/TLS/newcustomer.php";
     private int selected_gender;
     ProgressDialog progressDialog;
+    OfflineDatabase offlineDatabase;
+    private boolean ConnectionStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,8 @@ public class RegisterActivity extends AppCompatActivity {
         nationalid=findViewById(R.id.nationalid_ed);
         registerBtn=findViewById(R.id.registerBtn);
         mobile=findViewById(R.id.mobile_ed);
+
+        offlineDatabase=new OfflineDatabase(this);
 
         final RadioGroup radioGroup=findViewById(R.id.genderradiogroup);
 
@@ -74,6 +83,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                isConnected();
+
+
                 String sname=name.getText().toString();
                 String semail=email.getText().toString();
                 String smother_name=mother.getText().toString();
@@ -93,7 +105,14 @@ public class RegisterActivity extends AppCompatActivity {
                     if (!TextUtils.isEmpty(suser)){
                         //register
 
-                        RegisterNew(sname, smobile, saddress, scenter, smother_name, semail, sreference, sgender, snationalid, suser);
+                        if (ConnectionStatus==true){
+
+                            RegisterNew(sname, smobile, saddress, scenter, smother_name, semail, sreference, sgender, snationalid, suser);
+                        }else {
+                            StoredDataLocal(sname, smobile, saddress, scenter, smother_name, semail, sreference, sgender, snationalid, suser);
+                        }
+
+
 
 
 
@@ -114,6 +133,42 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
+
+    }
+
+    private void StoredDataLocal(final String sname, final String smobile, final String saddress, final String scenter, final String smother_name, final String semail, final String sreference, final String sgender, final String snationalid, final String suser) {
+
+        final AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setMessage("No Internet Connection. Do you want to store in local Database")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //code for insert
+                        String sstaus="0";
+                        boolean inserted=offlineDatabase.insertData(sname, smobile, saddress, scenter, smother_name, semail, sreference, sgender, snationalid, suser, sstaus);
+
+                        if (inserted==true){
+                            Toast.makeText(RegisterActivity.this, "Data Stores Successfully", Toast.LENGTH_LONG).show();
+                            Intent intent=new Intent(RegisterActivity.this, RegisterActivity.class);
+                            intent.putExtra("user", getIntent().getStringExtra("user"));
+                            startActivity(intent);
+
+                        }
+                        else {
+                            Toast.makeText(RegisterActivity.this, "Data Failed to Insert", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //cancel program
+                    }
+                });
+
+        AlertDialog alertDialog=builder.create();
+        alertDialog.show();
 
     }
 
@@ -154,5 +209,20 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    private void isConnected(){
+
+        ConnectivityManager connectivityManager=(ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+
+        NetworkInfo wifi=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobiledata=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+        if ((wifi !=null && wifi.isConnected()) || (mobiledata !=null && mobiledata.isConnected())){
+            ConnectionStatus=true;
+        }
+        else {
+            ConnectionStatus=false;
+        }
+
+    }
 
 }
