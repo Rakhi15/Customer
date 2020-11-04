@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/txt_id"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical|center"
+        android:src="@drawable/ic_baseline_account_circle_40"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/customer_name"
+        android:text="Customer Name"
+        android:layout_toRightOf="@id/txt_id"
+        android:textSize="18dp"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="40dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/customer_mobile"
+        android:text=" +1 8548254825"
+        android:layout_below="@id/customer_name"
+        android:layout_toRightOf="@id/txt_id"
+        android:layout_marginLeft="40dp"
+        android:textColor="@color/themecolor"
+        android:drawableLeft="@drawable/ic_baseline_local_phone_16"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/customer_city"
+        android:drawableLeft="@drawable/ic_baseline_location_on_16"
+        android:text="ABCD"
+        android:layout_below="@id/customer_mobile"
+        android:layout_toRightOf="@id/txt_id"
+        android:layout_marginLeft="40dp"
+        android:textColor="@color/themecolor"
+        />
+
+</RelativeLayout>

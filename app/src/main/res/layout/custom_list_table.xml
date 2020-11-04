@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="left"
+            android:layout_width="90dp"
+            android:id="@+id/mobile_txt"
+            android:textColor="@android:color/black"
+            android:textSize="14dp"
+            android:layout_column="1"
+            android:text="1234567890"
+            android:background="@drawable/cell_bg"
+            />
+        <TextView
+            android:gravity="left"
+            android:id="@+id/name_txt"
+            android:layout_width="140dp"
+            android:textColor="@android:color/black"
+            android:textSize="14dp"
+            android:layout_column="2"
+            android:text="RAKESH RAKESH"
+            android:background="@drawable/cell_bg"
+            />
+        <TextView
+            android:gravity="left"
+            android:id="@+id/city_txt"
+            android:textColor="@android:color/black"
+            android:layout_width="70dp"
+            android:textSize="14dp"
+            android:layout_column="3"
+            android:text="RAKESH"
+            android:background="@drawable/cell_bg"
+            />
+        <TextView
+            android:gravity="left"
+            android:id="@+id/regdate_txt"
+            android:textColor="@android:color/black"
+            android:textSize="14dp"
+            android:layout_column="4"
+            android:background="@drawable/cell_bg"
+            />
+    </TableRow>
+</TableLayout>

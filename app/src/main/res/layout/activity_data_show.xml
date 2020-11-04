@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DataShowActivity"
+    android:orientation="vertical">
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#000000">
+            <TextView
+                android:gravity="left"
+                android:id="@+id/mobile_txt"
+                android:text="Mobile"
+                android:layout_width="90dp"
+                android:textColor="@android:color/white"
+                android:layout_column="1"
+                android:textSize="14dp"
+                />
+            <TextView
+                android:gravity="left"
+                android:id="@+id/name_txt"
+                android:text="Name"
+                android:layout_width="140dp"
+                android:textColor="@android:color/white"
+                android:layout_column="2"
+                android:textSize="14dp"
+                />
+            <TextView
+                android:gravity="left"
+                android:id="@+id/city_txt"
+                android:text="City"
+                android:textColor="@android:color/white"
+                android:layout_column="3"
+                android:layout_width="70dp"
+                android:textSize="14dp"
+                />
+            <TextView
+                android:gravity="left"
+                android:id="@+id/regdate_txt"
+                android:text="Reg Date"
+                android:textColor="@android:color/white"
+               android:layout_column="4"
+                android:textSize="14dp"
+                />
+        </TableRow>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/list"
+            android:divider="#05C3B1"
+            android:dividerHeight="2dp"
+            />
+
+
+    </TableLayout>
+
+</LinearLayout>

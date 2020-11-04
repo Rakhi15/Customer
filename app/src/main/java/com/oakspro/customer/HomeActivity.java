@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
         customerdocBtn=findViewById(R.id.card3);
         searchCustomerBtn=findViewById(R.id.card4);
         reportBtn=findViewById(R.id.card5);
-        profileBtn=findViewById(R.id.card6);
+
 
         final String user=getIntent().getStringExtra("user").toString();
 
@@ -50,6 +50,24 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent=new Intent(HomeActivity.this, AssignSimcardActivity.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
+            }
+        });
+
+        searchCustomerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(HomeActivity.this, SearchCustomerActivity.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
+            }
+        });
+
+        reportBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(HomeActivity.this, ReportActivity.class);
                 intent.putExtra("user", user);
                 startActivity(intent);
             }
